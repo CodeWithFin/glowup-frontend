@@ -286,6 +286,58 @@ A modern, full-featured beauty e-commerce platform built with Next.js 14, featur
     - `GET /api/content/categories` - List categories
     - `GET /api/content/tags` - List tags
 
+### ✅ Phase 11: Consultations & Chat Integration
+
+- **Virtual Consultation Booking**:
+  - Book skincare, makeup, routine, or product recommendation consultations
+  - 30-minute consultation slots (9 AM - 5 PM)
+  - Minimum 2-hour advance booking, max 30 days ahead
+  - Real-time availability checking
+  - Automatic conflict detection and prevention
+  - Reschedule and cancellation support
+
+- **Multi-Channel Notifications**:
+  - WhatsApp integration via Twilio
+  - SMS fallback for failed WhatsApp delivery
+  - Email as final fallback
+  - Automatic notification routing with retries
+
+- **Smart Reminder System**:
+  - Booking confirmation (immediate)
+  - 24-hour advance reminder
+  - 1-hour advance reminder
+  - Webhook-driven reminder processing
+  - Template-based messaging
+
+- **Calendar Integration**:
+  - iCal (.ics) file generation
+  - Meeting link generation (Zoom/Google Meet ready)
+  - Calendar event creation with reminders
+  - Cancellation invite handling
+  - Localized date/time formatting (Kenya timezone)
+
+- **Booking Management**:
+  - View booking history by user or consultant
+  - Filter by status (pending, confirmed, completed, cancelled)
+  - Filter by consultation type
+  - Date range queries
+  - Payment status tracking (pending, paid, refunded)
+  - Post-consultation notes
+
+- **API Endpoints**:
+  - `POST /api/consultations/book` - Create new booking with notifications
+  - `GET /api/consultations/[id]` - Get booking details
+  - `GET /api/consultations/availability` - Check available time slots
+  - `POST /api/webhooks/consultation` - Process reminders (cron trigger)
+
+- **Twilio Integration**:
+  - WhatsApp Business API via Twilio
+  - SMS delivery via Twilio
+  - E.164 phone number formatting
+  - Message template processing
+  - Delivery status tracking
+  - Mock mode for development
+
 ## 🛠️ Tech Stack
 
 - **State**: Zustand (UI), TanStack React Query (server state)
@@ -304,7 +356,7 @@ A modern, full-featured beauty e-commerce platform built with Next.js 14, featur
 
 - **Tailwind CSS** 3.4.x
 
-- **shadcn/ui** component library (20+ components)- **Testing**: Vitest (72 tests passing across 10 test files)
+- **shadcn/ui** component library (20+ components)- **Testing**: Vitest (91 tests passing across 11 test files)
 
 - **Framer Motion** for animations
 
@@ -386,7 +438,9 @@ app/
 
 │   ├── admin/          # Admin content management (POST/PUT/DELETE)
 
-│   └── webhooks/       # Stripe & refund webhooks
+│   ├── consultations/  # Booking, availability endpoints
+
+│   └── webhooks/       # Stripe, refund, consultation webhooks
 
 ├── auth/               # Auth pages (login, register, reset)├── cart/                   # Cart service + session utils- Responsive grid layoutsglowup-frontend/You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -426,6 +480,10 @@ lib/
 
 ├── content/            # Blog post, category, tag services + sanitization
 
+├── consultation/       # Booking service, calendar generation
+
+├── notifications/      # WhatsApp/Twilio, SMS, email integration
+
 ├── payment/            # Stripe integrationtypes/  - Skin type, concerns, brands│   ├── layout.tsx           # Root layout with providersThis project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ├── return/             # Return service
@@ -449,6 +507,8 @@ types/├── return.ts               # ReturnRequest, ReturnItem, ReturnStatu
 ├── routine.ts          # Routine, diary entry, skin metrics types
 
 ├── content.ts          # Blog post, category, tag, video embed types
+
+├── consultation.ts     # Booking, availability, notification types
 
 └── product.ts              # Product, filters, search params  - In stock availability│   ├── page.tsx             # Home page
 
